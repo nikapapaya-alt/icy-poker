@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes turn-shrink {
+  from { transform: scaleX(1); }
+  to { transform: scaleX(0); }
+}
+
+@layer base {
+  body {
+    @apply bg-slate-950 font-sans text-slate-100 antialiased;
+  }
+}
