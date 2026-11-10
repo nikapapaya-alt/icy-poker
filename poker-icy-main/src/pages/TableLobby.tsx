@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Loader as Loader2, Users } from 'lucide-react';
+import { Loader as Loader2, Trophy, Users } from 'lucide-react';
 import { fetchPokerTables } from '@/lib/api';
 import { errorMessage, formatPeso } from '@/lib/format';
 import type { PokerTableRow } from '@/lib/models';
@@ -8,9 +8,10 @@ import type { TableConfig } from '@/poker/types';
 interface TableLobbyProps {
   balance: number;
   onSelect: (selection: { table: PokerTableRow; config: TableConfig }) => void;
+  onTournament: () => void;
 }
 
-export function TableLobby({ balance, onSelect }: TableLobbyProps) {
+export function TableLobby({ balance, onSelect, onTournament }: TableLobbyProps) {
   const [tables, setTables] = useState<PokerTableRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -50,6 +51,26 @@ export function TableLobby({ balance, onSelect }: TableLobbyProps) {
           <span className="font-semibold text-gold-300">{formatPeso(balance)}</span>.
         </p>
       </div>
+
+      {/* Tournament entry card */}
+      <button
+        type="button"
+        onClick={onTournament}
+        className="group flex w-full items-center gap-4 rounded-2xl border border-gold-400/30 bg-gradient-to-r from-gold-400/10 via-slate-900/60 to-slate-900/60 p-5 text-left shadow-lg transition hover:border-gold-400/60 hover:from-gold-400/15"
+      >
+        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gold-400/15 text-gold-300 transition group-hover:scale-110">
+          <Trophy className="h-6 w-6" />
+        </div>
+        <div className="min-w-0 flex-1">
+          <h2 className="text-lg font-bold text-white">Sit &amp; Go Tournament</h2>
+          <p className="text-sm text-slate-400">
+            8 players. Rising blinds. Last one standing wins. Free entry with play chips.
+          </p>
+        </div>
+        <span className="shrink-0 text-sm font-semibold text-gold-300 transition group-hover:translate-x-1">
+          Join &rarr;
+        </span>
+      </button>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {tables.map((table) => {
@@ -94,7 +115,7 @@ export function TableLobby({ balance, onSelect }: TableLobbyProps) {
                 <div className="flex justify-between">
                   <span className="text-slate-400">Buy-in</span>
                   <span className="font-medium tabular-nums text-slate-200">
-                    {formatPeso(Number(table.min_buy_in))} – {formatPeso(Number(table.max_buy_in))}
+                    {formatPeso(Number(table.min_buy_in))} &ndash; {formatPeso(Number(table.max_buy_in))}
                   </span>
                 </div>
               </div>

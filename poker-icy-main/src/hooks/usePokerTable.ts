@@ -6,6 +6,8 @@ import { supabase } from '@/lib/supabase';
 import { chooseBotAction } from '@/poker/bots';
 import { applyAction, emptyTable, legalActions, startHand } from '@/poker/engine';
 import { createHumanSeat, reconcileSeats, type RemotePlayer } from '@/poker/seating';
+import { botTrashTalk, makeMessage, type ChatMessage } from '@/poker/chat';
+import { playSound, primeAudio } from '@/lib/sounds';
 import type { Action, HandResult, TableConfig, TableState } from '@/poker/types';
 
 export const TURN_SECONDS = 30;
